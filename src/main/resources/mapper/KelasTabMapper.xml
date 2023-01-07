@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erickhene.dao.KelasTabMapper">
+    <resultMap id="BaseResultMap" type="com.myboost.erickhene.entity.impl.Kelas">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="k_name" jdbcType="VARCHAR" property="name" />
+        <result column="tingkatan_kelas_uuid" jdbcType="VARCHAR" property="tingkatanUuid" />
+    </resultMap>
+
+    <select 
+            id="selectAll"
+            resultMap="BaseResultMap"
+    >
+        SELECT * FROM kelas_tab
+    </select>
+</mapper>

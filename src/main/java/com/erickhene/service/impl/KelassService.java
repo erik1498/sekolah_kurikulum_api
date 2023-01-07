@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.erickhene.config.AppsConstant;
+import com.erickhene.dao.KelasTabMapper;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.entity.impl.Kelas;
 import com.erickhene.repo.KelasRepossitory;
@@ -20,15 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 public class KelassService implements BaseService<Kelas> {
 
     final KelasRepossitory repository;
+    final KelasTabMapper tabMapper;
 
     @Autowired
-    public KelassService(KelasRepossitory repository){
+    public KelassService(KelasRepossitory repository, KelasTabMapper tabMapper){
         this.repository = repository;
+        this.tabMapper = tabMapper;
     }
 
     @Override
     public GlobalResponse<List<Kelas>> getAll() {
-        List<Kelas> findAll = this.repository.findAll();
+        List<Kelas> findAll = this.tabMapper.selectAll();
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppsConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
         }
