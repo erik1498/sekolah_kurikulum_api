@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
 @Data
-public class KelasReq {
+public class KelassReq {
     @NotNull(message = "name is required")
     private String name;
 
     @NotNull(message = "tingkatan_kelas_uuid is required")
     @JsonAlias(value = "tingkatan_kelas_uuid")
     private String tingkatanKelasUuid;
-
+    
     public Kelas convertToEntity(){
         Kelas kelas = new Kelas();
         kelas.setName(getName());

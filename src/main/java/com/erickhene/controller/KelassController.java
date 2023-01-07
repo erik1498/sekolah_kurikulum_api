@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,22 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erickhene.dto.GlobalResponse;
-import com.erickhene.dto.request.KelasReq;
+import com.erickhene.dto.request.KelassReq;
 import com.erickhene.entity.impl.Kelas;
-import com.erickhene.service.impl.KelasService;
-import com.erickhene.service.impl.TingkatanKelasService;
+import com.erickhene.service.impl.KelassService;
 import com.erickhene.util.ValidationUtil;
 
 @RestController
 @RequestMapping("/api/kelas/")
-public class KelasController {
+public class KelassController {
 
-    final KelasService kelasService;
-    final TingkatanKelasService tingkatanKelasService;
+    final KelassService kelasService;
     
-    public KelasController(KelasService kelasService, TingkatanKelasService tingkatanKelasService) {
+    @Autowired
+    public KelassController(KelassService kelasService) {
         this.kelasService = kelasService;
-        this.tingkatanKelasService = tingkatanKelasService;
     }
 
     @GetMapping
@@ -38,7 +37,7 @@ public class KelasController {
     }
 
     @PostMapping
-    public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody KelasReq kelasReq, Errors errors){
+    public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody KelassReq kelasReq, Errors errors){
         if (errors.hasErrors()) {
             return ValidationUtil.generateError(errors);
         }

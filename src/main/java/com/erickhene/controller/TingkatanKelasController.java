@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,9 @@ import com.erickhene.util.ValidationUtil;
 @RequestMapping("api/tingkatan_kelas/")
 public class TingkatanKelasController {
 
-    private final TingkatanKelasService tingkatanKelasService;
+    final TingkatanKelasService tingkatanKelasService;
 
+    @Autowired
     public TingkatanKelasController(TingkatanKelasService tingkatanKelasService) {
         this.tingkatanKelasService = tingkatanKelasService;
     }
