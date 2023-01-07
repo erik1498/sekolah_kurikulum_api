@@ -1,7 +1,10 @@
 package com.erickhene.config;
 
+import java.util.Objects;
+
 import javax.sql.DataSource;
 
+import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -18,13 +21,19 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 )
 public class IbatisDataSource {
 
+    private final Environment env;
+
+    public IbatisDataSource(Environment env) {
+        this.env = env;
+    }
+
     @Bean(name = "erickheneDataSource")
     public DataSource erickheneDataSource(){
         final DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName(AppProperties.driverClassName);
-        driverManagerDataSource.setUrl(AppProperties.dataSourceUrl);
-        driverManagerDataSource.setUsername(AppProperties.dataSourceUsername);
-        driverManagerDataSource.setPassword(AppProperties.dataSourcePassword);
+        driverManagerDataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("spring.datasource.driver-class-name")));
+        driverManagerDataSource.setUrl(env.getProperty("spring.datasource.url"));
+        driverManagerDataSource.setUsername(env.getProperty("spring.datasource.username"));
+        driverManagerDataSource.setPassword(env.getProperty("spring.datasource.password"));
         return driverManagerDataSource;
     }
 
