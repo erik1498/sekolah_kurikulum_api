@@ -3,7 +3,6 @@ package com.erickhene.dto.request;
 import javax.validation.constraints.NotNull;
 
 import com.erickhene.entity.impl.Kelas;
-import com.erickhene.entity.impl.TingkatanKelas;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import lombok.Data;
@@ -17,10 +16,10 @@ public class KelasReq {
     @JsonAlias(value = "tingkatan_kelas_uuid")
     private String tingkatanKelasUuid;
 
-    public Kelas convertToEntity(TingkatanKelas tingkatanKelas){
+    public Kelas convertToEntity(){
         Kelas kelas = new Kelas();
         kelas.setName(getName());
-        kelas.setTingkatanKelas(tingkatanKelas);
+        kelas.setTingkatanUuid(getTingkatanKelasUuid());
         return kelas;
     }
 }

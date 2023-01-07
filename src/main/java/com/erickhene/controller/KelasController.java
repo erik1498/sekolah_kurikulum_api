@@ -42,7 +42,7 @@ public class KelasController {
         if (errors.hasErrors()) {
             return ValidationUtil.generateError(errors);
         }
-        Kelas kelas = kelasReq.convertToEntity(tingkatanKelasService.getByUuid(kelasReq.getTingkatanKelasUuid()).data);
+        Kelas kelas = kelasReq.convertToEntity();
         GlobalResponse<Kelas> response = kelasService.create(kelas);
         return ResponseEntity.status(response.code).body(response);
     }

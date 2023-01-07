@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.erickhene.config.AppConstant;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.entity.impl.Kelas;
-import com.erickhene.repo.KelasRepository;
+import com.erickhene.repo.KelasRepossitory;
 import com.erickhene.service.BaseService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KelasService implements BaseService<Kelas> {
 
-    final KelasRepository repository;
+    final KelasRepossitory repository;
 
     @Autowired
-    public KelasService(KelasRepository repository){
+    public KelasService(KelasRepossitory repository){
         this.repository = repository;
     }
 
