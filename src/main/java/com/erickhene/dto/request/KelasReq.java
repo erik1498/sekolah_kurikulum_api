@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
 @Data
-public class KelassReq {
+public class KelasReq {
     @NotNull(message = "name is required")
     private String name;
 

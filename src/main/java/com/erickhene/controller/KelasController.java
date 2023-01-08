@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erickhene.dto.GlobalResponse;
-import com.erickhene.dto.request.KelassReq;
+import com.erickhene.dto.request.KelasReq;
 import com.erickhene.entity.impl.Kelas;
-import com.erickhene.service.impl.KelassService;
+import com.erickhene.service.impl.KelasService;
 import com.erickhene.util.ValidationUtil;
 
 @RestController
 @RequestMapping("/api/kelas/")
-public class KelassController {
+public class KelasController {
 
-    final KelassService kelasService;
+    final KelasService kelasService;
     
     @Autowired
-    public KelassController(KelassService kelasService) {
+    public KelasController(KelasService kelasService) {
         this.kelasService = kelasService;
     }
 
@@ -37,7 +37,7 @@ public class KelassController {
     }
 
     @PostMapping
-    public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody KelassReq kelasReq, Errors errors){
+    public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody KelasReq kelasReq, Errors errors){
         if (errors.hasErrors()) {
             return ValidationUtil.generateError(errors);
         }

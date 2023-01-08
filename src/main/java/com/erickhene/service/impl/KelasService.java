@@ -18,13 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class KelassService implements BaseService<Kelas> {
+public class KelasService implements BaseService<Kelas> {
 
     final KelasRepossitory repository;
     final KelasTabMapper tabMapper;
 
     @Autowired
-    public KelassService(KelasRepossitory repository, KelasTabMapper tabMapper){
+    public KelasService(KelasRepossitory repository, KelasTabMapper tabMapper){
         this.repository = repository;
         this.tabMapper = tabMapper;
     }
