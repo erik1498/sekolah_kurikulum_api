@@ -11,7 +11,7 @@ import com.erickhene.config.AppConstant;
 import com.erickhene.dao.KelasTabMapper;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.entity.impl.Kelas;
-import com.erickhene.repo.KelasRepossitory;
+import com.erickhene.repo.KelasRepository;
 import com.erickhene.service.BaseService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KelasService implements BaseService<Kelas> {
 
-    final KelasRepossitory repository;
+    final KelasRepository repository;
     final KelasTabMapper tabMapper;
 
     @Autowired
-    public KelasService(KelasRepossitory repository, KelasTabMapper tabMapper){
+    public KelasService(KelasRepository repository, KelasTabMapper tabMapper){
         this.repository = repository;
         this.tabMapper = tabMapper;
     }
