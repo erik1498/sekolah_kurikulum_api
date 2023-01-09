@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.erickhene.config.AppsConstant;
+import com.erickhene.config.AppConstant;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.entity.impl.MataPelajaran;
 import com.erickhene.repo.MataPelajaranRepository;
@@ -29,7 +29,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         if (!findAll.isEmpty()) {
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findAll);
         }
-        return new GlobalResponse<>(AppsConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
+        return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         if (findById.isPresent()) {
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findById.get());
         }
-        return new GlobalResponse<>(AppsConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
+        return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
     }
     
 }
