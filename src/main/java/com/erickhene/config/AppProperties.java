@@ -6,6 +6,9 @@ import lombok.Getter;
 
 @Getter
 public class AppProperties {
+    private AppProperties(){}
+    @Value("${server.port}")
+    public static  String serverPort;
     @Value("${spring.datasource.driver-class-name}")
     public static String driverClassName;
     @Value("${spring.datasource.url}")

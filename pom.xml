@@ -76,6 +76,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>sekolah-app-docker</finalName>
 	</build>
 
 </project>
