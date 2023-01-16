@@ -26,7 +26,7 @@ public class Base implements Serializable{
 
     @CreationTimestamp
     @Column(name = "created_date", updatable = false, nullable = false)
-    private Date createDate;
+    private Date createdDate;
 
     @UpdateTimestamp
     @Column(name = "updated_date")

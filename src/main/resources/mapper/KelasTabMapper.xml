@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.erickhene.dao.KelasTabMapper">
-    <resultMap id="BaseResultMap" type="com.erickhene.entity.impl.Kelas">
+
+    <resultMap id="BaseResultMap" type="com.erickhene.entity.Base">
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+        <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+    </resultMap>
+
+    <resultMap id="KelasResultMap" type="com.erickhene.entity.impl.Kelas" extends="BaseResultMap">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="k_name" jdbcType="VARCHAR" property="name" />
         <result column="tingkatan_kelas_uuid" jdbcType="VARCHAR" property="tingkatanUuid" />
@@ -9,7 +16,7 @@
 
     <select 
             id="selectAll"
-            resultMap="BaseResultMap"
+            resultMap="KelasResultMap"
     >
         SELECT * FROM kelas_tab
     </select>
