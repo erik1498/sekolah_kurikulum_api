@@ -1,6 +1,6 @@
 package com.erickhene.jwt.config;
 
-import com.erickhene.jwt.dto.LoginCredentials;
+import com.erickhene.jwt.dto.request.LoginCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

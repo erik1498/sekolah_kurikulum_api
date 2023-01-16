@@ -2,9 +2,13 @@ package com.erickhene.jwt.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.erickhene.jwt.dto.response.GlobalResponse;
 import com.erickhene.jwt.service.JwtUserDetailsService;
+import com.erickhene.util.ObjectMapperUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class AuthorizationFilter extends BasicAuthenticationFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
     private final JwtUserDetailsService jwtUserDetailsService;
@@ -29,13 +34,22 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
-        if (authenticationToken == null){
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
+            if (authenticationToken == null){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
-            return;
+        }catch (Exception e){
+            log.error("Error [{}]", e.getMessage());
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            response.setContentType("application/json");
+            GlobalResponse errorResponse = new GlobalResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            response.getWriter().write(ObjectMapperUtil.generateObjectMapper().writeValueAsString(errorResponse));
+            filterChain.doFilter(request, response);
         }
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        filterChain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
