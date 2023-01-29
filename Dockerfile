@@ -1,3 +1,3 @@
 FROM openjdk:11
-COPY ./target/sekolah-app-docker.jar sekolah-app-docker.jar
-CMD ["java", "-jar", "./sekolah-app-docker.jar"]
+COPY ./target/sekolah_docker.jar sekolah_docker.jar
+CMD ["java", "-jar", "./sekolah_docker.jar"]

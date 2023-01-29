@@ -105,7 +105,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>sekolah-app-docker</finalName>
+		<finalName>sekolah_docker</finalName>
 	</build>
 
 </project>
