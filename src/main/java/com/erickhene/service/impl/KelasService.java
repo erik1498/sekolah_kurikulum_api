@@ -31,7 +31,9 @@ public class KelasService implements BaseService<Kelas> {
 
     @Override
     public GlobalResponse<List<Kelas>> getAll() {
+        log.info("Begin [{}]", "getAllKelas");
         List<Kelas> findAll = this.tabMapper.selectAll();
+        log.info("Kelas Length = {}", findAll.size());
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
         }
@@ -40,6 +42,8 @@ public class KelasService implements BaseService<Kelas> {
 
     @Override
     public GlobalResponse<Kelas> create(Kelas kelas){
+        log.info("Begin [{}]", "CreateKelas");
+        log.info("Kelas = {}", kelas);
         try {
             return new GlobalResponse<>(null, HttpStatus.OK.value(), repository.save(kelas));
         }catch(Exception e){
@@ -49,9 +53,13 @@ public class KelasService implements BaseService<Kelas> {
     }
 
     @Override
-    public GlobalResponse<Kelas> getByUuid(String id) {
-        Optional<Kelas> findById = repository.findById(id);
+    public GlobalResponse<Kelas> getByUuid(String uuid) {
+        log.info("Begin [{}]", "getByUuidKelas");
+        log.info("Uuid = {}", uuid);
+        Optional<Kelas> findById = repository.findById(uuid);
+        log.error("Kelas Present = {}", findById.isPresent());
         if (findById.isPresent()) {
+            log.info("Kelas = {}", findById.get().toString());
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findById.get());
         }
         return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());

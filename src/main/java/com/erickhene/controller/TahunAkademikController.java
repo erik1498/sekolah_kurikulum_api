@@ -15,23 +15,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tahun_akademik/")
 public class TahunAkademikController {
-    private final TahunAkademikService service;
+    private final TahunAkademikService tahunAkademikService;
 
-    public TahunAkademikController(TahunAkademikService service) {
-        this.service = service;
+    public TahunAkademikController(TahunAkademikService tahunAkademikService) {
+        this.tahunAkademikService = tahunAkademikService;
     }
 
     @GetMapping
     public ResponseEntity<GlobalResponse<List<TahunAkademik>>> getAll(){
-        GlobalResponse<List<TahunAkademik>> response = service.getAll();
+        GlobalResponse<List<TahunAkademik>> response = tahunAkademikService.getAll();
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @GetMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> getByUuid(@PathVariable("uuid") String uuid){
+        GlobalResponse<?> response = tahunAkademikService.getByUuid(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
 
     @PostMapping
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody TahunAkademikReq tahunAkademikReq, Errors errors){
         if (errors.hasErrors())
             return ValidationUtil.generateError(errors);
-        GlobalResponse<TahunAkademik> response = service.create(tahunAkademikReq.convertToEntity());
+        GlobalResponse<TahunAkademik> response = tahunAkademikService.create(tahunAkademikReq.convertToEntity());
         return ResponseEntity.status(response.getCode()).body(response);
     }
 }

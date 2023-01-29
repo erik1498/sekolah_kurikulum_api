@@ -7,11 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.dto.request.TingkatanKelasReq;
@@ -34,6 +30,12 @@ public class TingkatanKelasController {
     public ResponseEntity<GlobalResponse<?>> getAll() {
         GlobalResponse<List<TingkatanKelas>> response = tingkatanKelasService.getAll();    
         return ResponseEntity.status(response.code).body(response);
+    }
+
+    @GetMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> getByUuid(@PathVariable("uuid") String uuid){
+        GlobalResponse<?> response = tingkatanKelasService.getByUuid(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @PostMapping

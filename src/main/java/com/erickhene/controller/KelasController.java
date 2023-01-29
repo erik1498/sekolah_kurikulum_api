@@ -7,11 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.dto.request.KelasReq;
@@ -31,9 +27,15 @@ public class KelasController {
     }
 
     @GetMapping
-    public ResponseEntity<GlobalResponse<?>> getAll() {
+    public ResponseEntity<GlobalResponse<List<Kelas>>> getAll() {
         GlobalResponse<List<Kelas>> response = kelasService.getAll();
-        return ResponseEntity.status(response.code).body(response);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @GetMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<Kelas>> getByUUID(@PathVariable("uuid") String uuid){
+        GlobalResponse<Kelas> response = kelasService.getByUuid(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @PostMapping
@@ -43,6 +45,6 @@ public class KelasController {
         }
         Kelas kelas = kelasReq.convertToEntity();
         GlobalResponse<Kelas> response = kelasService.create(kelas);
-        return ResponseEntity.status(response.code).body(response);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }

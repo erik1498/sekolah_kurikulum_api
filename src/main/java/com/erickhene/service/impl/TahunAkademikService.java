@@ -2,6 +2,7 @@ package com.erickhene.service.impl;
 
 import com.erickhene.config.AppConstant;
 import com.erickhene.dto.GlobalResponse;
+import com.erickhene.entity.impl.Kelas;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
 import com.erickhene.service.BaseService;
@@ -23,15 +24,19 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
 
     @Override
     public GlobalResponse<List<TahunAkademik>> getAll() {
-        List<TahunAkademik> all = repository.findAll();
-        if (all.isEmpty()){
+        log.info("Begin [{}]", "getAllTahunAkademik");
+        List<TahunAkademik> findAll = repository.findAll();
+        log.info("Tahun Akademik Length = {}", findAll.size());
+        if (findAll.isEmpty()){
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
         }
-        return new GlobalResponse<>(null, HttpStatus.OK.value(), all);
+        return new GlobalResponse<>(null, HttpStatus.OK.value(), findAll);
     }
 
     @Override
     public GlobalResponse<TahunAkademik> create(TahunAkademik data) {
+        log.info("Begin [{}]", "createTahunAkademik");
+        log.info("Tahun Akademik = {}", data);
         try{
             return new GlobalResponse<>(null, HttpStatus.OK.value(), repository.save(data));
         }catch (Exception e){
@@ -41,10 +46,15 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
     }
 
     @Override
-    public GlobalResponse<TahunAkademik> getByUuid(String id) {
-        Optional<TahunAkademik> byId = repository.findById(id);
-        if (byId.isPresent())
-            return new GlobalResponse<>(null, HttpStatus.OK.value(), byId.get());
+    public GlobalResponse<TahunAkademik> getByUuid(String uuid) {
+        log.info("Begin [{}]", "getByUuidTahunAkademik");
+        log.info("Uuid = {}", uuid);
+        Optional<TahunAkademik> findById = repository.findById(uuid);
+        log.info("Tahun Akademik Present = {}", findById.isPresent());
+        if (findById.isPresent()) {
+            log.info("Tahun Akademik = {}", findById.get().toString());
+            return new GlobalResponse<>(null, HttpStatus.OK.value(), findById.get());
+        }
         return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value(), null);
     }
 }

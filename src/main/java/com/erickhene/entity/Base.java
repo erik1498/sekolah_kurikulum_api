@@ -8,6 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.erickhene.util.ObjectMapperUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@Slf4j
 public class Base implements Serializable{
     @Id
     @Column(name = "uuid", updatable = false, nullable = false)
@@ -34,4 +39,17 @@ public class Base implements Serializable{
 
     @Column(name = "enabled")
     private Boolean enabled = Boolean.TRUE;
+
+    @Override
+    public String toString(){
+        ObjectMapper objectMapper = ObjectMapperUtil.generateObjectMapper();
+        try {
+            return objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            log.error("Error [{}]", e.getMessage());
+            return e.getMessage();
+        }
+    }
 }

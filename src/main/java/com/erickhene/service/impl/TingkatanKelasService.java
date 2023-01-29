@@ -3,6 +3,7 @@ package com.erickhene.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.entity.impl.TahunAkademik;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,9 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
 
     @Override
     public GlobalResponse<List<TingkatanKelas>> getAll() {
+        log.info("Begin [{}]", "getAllTahunAkademik");
         List<TingkatanKelas> findAll = repository.findAll();
+        log.info("Tingkatan Kelas Length = {}", findAll.size());
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
         }
@@ -35,6 +38,8 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
 
     @Override
     public GlobalResponse<TingkatanKelas> create(TingkatanKelas tingkatanKelas) {
+        log.info("Begin [{}]", "createTingkatanKelas");
+        log.info("Tingkatan Kelas = {}", tingkatanKelas);
         try {
             return new GlobalResponse<>("", HttpStatus.CREATED.value(), repository.save(tingkatanKelas));
         } catch (Exception e) {
@@ -44,9 +49,13 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
     }
 
     @Override
-    public GlobalResponse<TingkatanKelas> getByUuid(String id) {
-        Optional<TingkatanKelas> findById = repository.findById(id);
+    public GlobalResponse<TingkatanKelas> getByUuid(String uuid) {
+        log.info("Begin [{}]", "getByUuidTingkatanKelas");
+        log.info("Uuid = {}", uuid);
+        Optional<TingkatanKelas> findById = repository.findById(uuid);
+        log.info("Tingkatan Kelas Present = {}", findById.isPresent());
         if (findById.isPresent()) {
+            log.info("Tingkatan Kelas = {}", findById.get().toString());
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findById.get());
         }
         return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
