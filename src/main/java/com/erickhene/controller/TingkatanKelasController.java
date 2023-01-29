@@ -27,14 +27,14 @@ public class TingkatanKelasController {
     }
 
     @GetMapping
-    public ResponseEntity<GlobalResponse<?>> getAll() {
+    public ResponseEntity<GlobalResponse<List<TingkatanKelas>>> getAll() {
         GlobalResponse<List<TingkatanKelas>> response = tingkatanKelasService.getAll();    
         return ResponseEntity.status(response.code).body(response);
     }
 
     @GetMapping("{uuid}")
-    public ResponseEntity<GlobalResponse<?>> getByUuid(@PathVariable("uuid") String uuid){
-        GlobalResponse<?> response = tingkatanKelasService.getByUuid(uuid);
+    public ResponseEntity<GlobalResponse<TingkatanKelas>> getByUuid(@PathVariable("uuid") String uuid){
+        GlobalResponse<TingkatanKelas> response = tingkatanKelasService.getByUuid(uuid);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 

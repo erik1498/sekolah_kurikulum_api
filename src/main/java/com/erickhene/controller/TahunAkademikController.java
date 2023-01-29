@@ -28,8 +28,8 @@ public class TahunAkademikController {
     }
 
     @GetMapping("{uuid}")
-    public ResponseEntity<GlobalResponse<?>> getByUuid(@PathVariable("uuid") String uuid){
-        GlobalResponse<?> response = tahunAkademikService.getByUuid(uuid);
+    public ResponseEntity<GlobalResponse<TahunAkademik>> getByUuid(@PathVariable("uuid") String uuid){
+        GlobalResponse<TahunAkademik> response = tahunAkademikService.getByUuid(uuid);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
