@@ -10,4 +10,6 @@ public interface BaseService<T> {
     GlobalResponse<T> create(T data);
 
     GlobalResponse<T> getByUuid(String id);
+
+    GlobalResponse<T> update(String id, T data);
 }

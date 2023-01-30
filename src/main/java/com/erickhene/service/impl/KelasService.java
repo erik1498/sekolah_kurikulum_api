@@ -1,5 +1,6 @@
 package com.erickhene.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,13 +57,37 @@ public class KelasService implements BaseService<Kelas> {
     public GlobalResponse<Kelas> getByUuid(String uuid) {
         log.info("Begin [{}]", "getByUuidKelas");
         log.info("Uuid = {}", uuid);
-        Optional<Kelas> findById = repository.findById(uuid);
-        log.error("Kelas Present = {}", findById.isPresent());
+        Optional<Kelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+        log.info("Kelas Present = {}", findById.isPresent());
         if (findById.isPresent()) {
             log.info("Kelas = {}", findById.get().toString());
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findById.get());
         }
         return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
     }
-    
+
+    @Override
+    public GlobalResponse<Kelas> update(String uuid, Kelas data) {
+        log.info("Begin [{}]", "UpdateKelas");
+        log.info("Uuid = {}", uuid);
+        try{
+            Optional<Kelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+            log.info("Kelas Present = {}", findById.isPresent());
+            if (findById.isPresent()){
+                log.info("Kelas = {}", findById.get().toString());
+                Kelas getByUuid = findById.get();
+                getByUuid.setName(data.getName());
+                getByUuid.setUpdatedDate(new Date());
+                getByUuid.setTingkatanUuid(data.getTingkatanUuid());
+                repository.save(getByUuid);
+                log.info("Updated to = {}", getByUuid.toString());
+                return new GlobalResponse<>(null, HttpStatus.OK.value(), getByUuid);
+            }
+            return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
+        } catch (Exception e) {
+            log.error("Error [{}]", e.getMessage());
+            return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
 }

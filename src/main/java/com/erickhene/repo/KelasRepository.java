@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.erickhene.entity.impl.Kelas;
 
+import java.util.Optional;
+
 @Repository
 public interface KelasRepository extends JpaRepository<Kelas, String> {
-    
+    Optional<Kelas> findByUuidAndEnabledTrue(String uuid);
 }

@@ -41,4 +41,13 @@ public class TahunAkademikController {
         GlobalResponse<TahunAkademik> response = tahunAkademikService.create(tahunAkademikReq.convertToEntity());
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @PutMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> update(@Valid @RequestBody TahunAkademikReq tahunAkademikReq, @PathVariable("uuid") String uuid, Errors errors){
+        if (errors.hasErrors())
+            return ValidationUtil.generateError(errors);
+        TahunAkademik tahunAkademik = tahunAkademikReq.convertToEntity();
+        GlobalResponse<TahunAkademik> response = tahunAkademikService.update(uuid, tahunAkademik);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }

@@ -47,4 +47,13 @@ public class KelasController {
         GlobalResponse<Kelas> response = kelasService.create(kelas);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @PutMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> update(@Valid @RequestBody KelasReq kelasReq, @PathVariable("uuid") String uuid, Errors errors){
+        if (errors.hasErrors())
+            return ValidationUtil.generateError(errors);
+        Kelas kelas = kelasReq.convertToEntity();
+        GlobalResponse<Kelas> response = kelasService.update(uuid, kelas);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }

@@ -1,9 +1,9 @@
 package com.erickhene.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.erickhene.entity.impl.TahunAkademik;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
 
     @Override
     public GlobalResponse<List<TingkatanKelas>> getAll() {
-        log.info("Begin [{}]", "getAllTahunAkademik");
-        List<TingkatanKelas> findAll = repository.findAll();
+        log.info("Begin [{}]", "getAllTingkatanKelas");
+        List<TingkatanKelas> findAll = repository.findAllByEnabledTrue();
         log.info("Tingkatan Kelas Length = {}", findAll.size());
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
@@ -52,7 +52,7 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
     public GlobalResponse<TingkatanKelas> getByUuid(String uuid) {
         log.info("Begin [{}]", "getByUuidTingkatanKelas");
         log.info("Uuid = {}", uuid);
-        Optional<TingkatanKelas> findById = repository.findById(uuid);
+        Optional<TingkatanKelas> findById = repository.findByUuidAndEnabledTrue(uuid);
         log.info("Tingkatan Kelas Present = {}", findById.isPresent());
         if (findById.isPresent()) {
             log.info("Tingkatan Kelas = {}", findById.get().toString());
@@ -60,5 +60,28 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
         }
         return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
     }
-    
+
+    @Override
+    public GlobalResponse<TingkatanKelas> update(String uuid, TingkatanKelas data) {
+        log.info("Begin [{}]", "UpdateTingkatanKelas");
+        log.info("Uuid = {}", uuid);
+        try{
+            Optional<TingkatanKelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+            log.info("Tingkatan Kelas Present = {}", findById.isPresent());
+            if (findById.isPresent()){
+                log.info("Tingkatan Kelas = {}", findById.get().toString());
+                TingkatanKelas getByUuid = findById.get();
+                getByUuid.setName(data.getName());
+                getByUuid.setUpdatedDate(new Date());
+                repository.save(getByUuid);
+                log.info("Updated to = {}", getByUuid.toString());
+                return new GlobalResponse<>(null, HttpStatus.OK.value(), getByUuid);
+            }
+            return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
+        } catch (Exception e) {
+            log.error("Error [{}]", e.getMessage());
+            return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
 }

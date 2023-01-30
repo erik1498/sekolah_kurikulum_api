@@ -29,7 +29,7 @@ public class TingkatanKelasController {
     @GetMapping
     public ResponseEntity<GlobalResponse<List<TingkatanKelas>>> getAll() {
         GlobalResponse<List<TingkatanKelas>> response = tingkatanKelasService.getAll();    
-        return ResponseEntity.status(response.code).body(response);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @GetMapping("{uuid}")
@@ -44,6 +44,15 @@ public class TingkatanKelasController {
             return ValidationUtil.generateError(errors);
         }
         GlobalResponse<TingkatanKelas> response = tingkatanKelasService.create(tingkatanKelasReq.convertToEntity());
-        return ResponseEntity.status(response.code).body(response);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PutMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> update(@Valid @RequestBody TingkatanKelasReq tingkatanKelasReq, @PathVariable("uuid") String uuid, Errors errors){
+        if (errors.hasErrors())
+            return ValidationUtil.generateError(errors);
+        TingkatanKelas tingkatanKelas = tingkatanKelasReq.convertToEntity();
+        GlobalResponse<TingkatanKelas> response = tingkatanKelasService.update(uuid, tingkatanKelas);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }

@@ -16,5 +16,5 @@ import lombok.Setter;
 @Getter
 public class TingkatanKelas extends Base {
     @Column
-    private String nama;
+    private String name;
 }

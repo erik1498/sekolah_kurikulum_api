@@ -13,7 +13,7 @@ public class TingkatanKelasReq {
 
     public TingkatanKelas convertToEntity() {
         TingkatanKelas tingkatanKelas = new TingkatanKelas();
-        tingkatanKelas.setNama(getName());
+        tingkatanKelas.setName(getName());
         return tingkatanKelas;
     }
 }

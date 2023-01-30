@@ -45,4 +45,13 @@ public class MataPelajaranController {
         GlobalResponse<MataPelajaran> response = mataPelajaranService.create(req.convertToEntity());
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @PutMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> update(@Valid @RequestBody MataPelajaranReq mataPelajaranReq, @PathVariable("uuid") String uuid, Errors errors){
+        if (errors.hasErrors())
+            return ValidationUtil.generateError(errors);
+        MataPelajaran mataPelajaran = mataPelajaranReq.convertToEntity();
+        GlobalResponse<MataPelajaran> response = mataPelajaranService.update(uuid, mataPelajaran);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }
