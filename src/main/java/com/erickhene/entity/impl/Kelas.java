@@ -19,4 +19,7 @@ public class Kelas extends Base {
 
     @Column(name = "k_tingkatan_kelas_uuid")
     private String tingkatanUuid;
+
+    @Column(name = "k_tahun_akademik_uuid")
+    private String tahunAkademikUuid;
 }

@@ -11,13 +11,14 @@
     <resultMap id="KelasResultMap" type="com.erickhene.entity.impl.Kelas" extends="BaseResultMap">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="k_name" jdbcType="VARCHAR" property="name" />
-        <result column="tingkatan_kelas_uuid" jdbcType="VARCHAR" property="tingkatanUuid" />
+        <result column="k_tingkatan_kelas_uuid" jdbcType="VARCHAR" property="tingkatanUuid" />
+        <result column="k_tahun_akademik_uuid" jdbcType="VARCHAR" property="tahunAkademikUuid" />
     </resultMap>
 
     <select 
             id="selectAll"
             resultMap="KelasResultMap"
     >
-        SELECT * FROM kelas_tab
+        SELECT * FROM kelas_tab WHERE enabled = 1
     </select>
 </mapper>

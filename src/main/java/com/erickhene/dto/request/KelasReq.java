@@ -15,11 +15,16 @@ public class KelasReq {
     @NotNull(message = "tingkatan_kelas_uuid is required")
     @JsonAlias(value = "tingkatan_kelas_uuid")
     private String tingkatanKelasUuid;
+
+    @NotNull(message = "tahun_akademik_uuid is required")
+    @JsonAlias(value = "tahun_akademik_uuid")
+    private String tahunAkademikUuid;
     
     public Kelas convertToEntity(){
         Kelas kelas = new Kelas();
         kelas.setName(getName());
         kelas.setTingkatanUuid(getTingkatanKelasUuid());
+        kelas.setTahunAkademikUuid(getTahunAkademikUuid());
         return kelas;
     }
 }
