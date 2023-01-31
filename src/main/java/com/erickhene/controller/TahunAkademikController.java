@@ -52,7 +52,7 @@ public class TahunAkademikController {
     }
 
     @DeleteMapping("{uuid}")
-    public ResponseEntity<GlobalResponse<?>> delete(@PathVariable("uuid") String uuid){
+    public ResponseEntity<GlobalResponse<Boolean>> delete(@PathVariable("uuid") String uuid){
         GlobalResponse<Boolean> response = tahunAkademikService.delete(uuid);
         return ResponseEntity.status(response.getCode()).body(response);
     }
