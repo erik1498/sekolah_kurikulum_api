@@ -81,4 +81,26 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
             return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
+
+    @Override
+    public GlobalResponse<Boolean> delete(String uuid) {
+        log.info("Begin [{}]", "DeleteTahunAkademik");
+        log.info("Uuid = {}", uuid);
+        try{
+            Optional<TahunAkademik> findById = repository.findByUuidAndEnabledTrue(uuid);
+            log.info("Tahun Akademik Present = {}", findById.isPresent());
+            if (findById.isPresent()){
+                log.info("Tahun Akademik = {}", findById.get().toString());
+                TahunAkademik getByUuid = findById.get();
+                getByUuid.setEnabled(false);
+                repository.save(getByUuid);
+                log.info("Tahun Akademik Enabled = {}", getByUuid.toString());
+                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), true);
+            }
+            return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
+        }catch (Exception e){
+            log.error("Error [{}]", e.getMessage());
+            return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
 }

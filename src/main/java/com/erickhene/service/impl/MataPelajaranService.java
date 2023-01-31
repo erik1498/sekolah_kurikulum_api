@@ -85,4 +85,26 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         }
     }
 
+    @Override
+    public GlobalResponse<Boolean> delete(String uuid) {
+        log.info("Begin [{}]", "DeleteMataPelajaran");
+        log.info("Uuid = {}", uuid);
+        try{
+            Optional<MataPelajaran> findById = repository.findByUuidAndEnabledTrue(uuid);
+            log.info("Mata Pelajaran Present = {}", findById.isPresent());
+            if (findById.isPresent()){
+                log.info("Mata Pelajaran = {}", findById.get().toString());
+                MataPelajaran getByUuid = findById.get();
+                getByUuid.setEnabled(false);
+                repository.save(getByUuid);
+                log.info("Mata Pelajaran Enabled = {}", getByUuid.toString());
+                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), true);
+            }
+            return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
+        }catch (Exception e){
+            log.error("Error [{}]", e.getMessage());
+            return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
 }

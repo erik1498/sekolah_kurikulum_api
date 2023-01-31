@@ -56,4 +56,10 @@ public class KelasController {
         GlobalResponse<Kelas> response = kelasService.update(uuid, kelas);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @DeleteMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> delete(@PathVariable("uuid") String uuid){
+        GlobalResponse<Boolean> response = kelasService.delete(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }

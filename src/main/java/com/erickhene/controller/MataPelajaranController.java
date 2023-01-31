@@ -54,4 +54,10 @@ public class MataPelajaranController {
         GlobalResponse<MataPelajaran> response = mataPelajaranService.update(uuid, mataPelajaran);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @DeleteMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> delete(@PathVariable("uuid") String uuid){
+        GlobalResponse<Boolean> response = mataPelajaranService.delete(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }

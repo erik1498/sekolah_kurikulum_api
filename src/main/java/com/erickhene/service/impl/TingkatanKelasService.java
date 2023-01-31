@@ -84,4 +84,26 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
         }
     }
 
+    @Override
+    public GlobalResponse<Boolean> delete(String uuid) {
+        log.info("Begin [{}]", "DeleteTingkatanKelas");
+        log.info("Uuid = {}", uuid);
+        try{
+            Optional<TingkatanKelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+            log.info("Tingkatan Kelas Present = {}", findById.isPresent());
+            if (findById.isPresent()){
+                log.info("Tingkatan Kelas = {}", findById.get().toString());
+                TingkatanKelas getByUuid = findById.get();
+                getByUuid.setEnabled(false);
+                repository.save(getByUuid);
+                log.info("Tingkatan Kelas Enabled = {}", getByUuid.toString());
+                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), true);
+            }
+            return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
+        }catch (Exception e){
+            log.error("Error [{}]", e.getMessage());
+            return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+    }
+
 }

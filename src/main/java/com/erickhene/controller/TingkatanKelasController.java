@@ -55,4 +55,10 @@ public class TingkatanKelasController {
         GlobalResponse<TingkatanKelas> response = tingkatanKelasService.update(uuid, tingkatanKelas);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @DeleteMapping("{uuid}")
+    public ResponseEntity<GlobalResponse<?>> delete(@PathVariable("uuid") String uuid){
+        GlobalResponse<Boolean> response = tingkatanKelasService.delete(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }
