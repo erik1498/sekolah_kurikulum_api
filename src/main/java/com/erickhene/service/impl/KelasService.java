@@ -46,7 +46,7 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "CreateKelas");
         log.info("Kelas = {}", kelas);
         try {
-            return new GlobalResponse<>(null, HttpStatus.OK.value(), repository.save(kelas));
+            return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(kelas));
         }catch(Exception e){
             log.error("Error [{}]", e.getCause().getCause().getLocalizedMessage());
             return new GlobalResponse<>(e.getCause().getCause().getLocalizedMessage(), HttpStatus.BAD_REQUEST.value());

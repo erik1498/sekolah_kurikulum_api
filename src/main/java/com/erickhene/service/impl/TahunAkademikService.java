@@ -38,7 +38,7 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
         log.info("Begin [{}]", "createTahunAkademik");
         log.info("Tahun Akademik = {}", data);
         try{
-            return new GlobalResponse<>(null, HttpStatus.OK.value(), repository.save(data));
+            return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(data));
         }catch (Exception e){
             log.error("Error [{}]", e.getCause().getCause().getMessage());
             return new GlobalResponse<>(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST.value());

@@ -42,7 +42,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "createMataPelajaran");
         log.info("Mata Pelajaran = {}", data);
         try {
-            return new GlobalResponse<>(null, HttpStatus.OK.value(), repository.save(data));
+            return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(data));
         } catch (Exception e) {
             return new GlobalResponse<>(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST.value(), null);
         }
