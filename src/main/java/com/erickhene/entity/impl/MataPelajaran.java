@@ -14,9 +14,9 @@ import lombok.Setter;
 @Setter
 @Table(name = "mata_pelajaran_tab")
 public class MataPelajaran extends Base {
-    @Column(name = "name", nullable = false)
+    @Column(name = "m_name", nullable = false)
     private String name;
 
-    @Column(name = "kkm", nullable = false)
+    @Column(name = "m_kkm", nullable = false)
     private Integer kkm;
 }

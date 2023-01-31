@@ -17,6 +17,6 @@ public class Kelas extends Base {
     @Column(name = "k_name")
     private String name;
 
-    @Column(name = "tingkatan_kelas_uuid")
+    @Column(name = "k_tingkatan_kelas_uuid")
     private String tingkatanUuid;
 }
