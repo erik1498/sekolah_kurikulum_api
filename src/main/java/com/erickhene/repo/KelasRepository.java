@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface KelasRepository extends JpaRepository<Kelas, String> {
-    Optional<Kelas> findByUuidAndEnabledTrue(String uuid);
+
 }

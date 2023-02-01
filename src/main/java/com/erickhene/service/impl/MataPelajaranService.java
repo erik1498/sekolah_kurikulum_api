@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.dao.MataPelajaranTabMapper;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +23,20 @@ import com.erickhene.service.BaseService;
 public class MataPelajaranService implements BaseService<MataPelajaran> {
 
     private final MataPelajaranRepository repository;
+    private final MataPelajaranTabMapper tabMapper;
     private final TahunAkademikRepository tahunAkademikRepository;
 
     @Autowired
-    public MataPelajaranService(MataPelajaranRepository repository, TahunAkademikRepository tahunAkademikRepository) {
+    public MataPelajaranService(MataPelajaranRepository repository, MataPelajaranTabMapper tabMapper, TahunAkademikRepository tahunAkademikRepository) {
         this.repository = repository;
+        this.tabMapper = tabMapper;
         this.tahunAkademikRepository = tahunAkademikRepository;
     }
 
     @Override
     public GlobalResponse<List<MataPelajaran>> getAll() {
         log.info("Begin [{}]", "getAllMataPelajaran");
-        List<MataPelajaran> findAll = repository.findAllByEnabledTrue();
+        List<MataPelajaran> findAll = tabMapper.selectAll();
         log.info("Mata Pelajaran Length = {}", findAll.size());
         if (!findAll.isEmpty()) {
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findAll);
@@ -46,7 +49,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "createMataPelajaran");
         log.info("Mata Pelajaran = {}", data);
         try {
-            Optional<TahunAkademik> tahunAkademik = tahunAkademikRepository.findByUuidAndEnabledTrue(data.getTahunAkademikUuid());
+            Optional<TahunAkademik> tahunAkademik = tahunAkademikRepository.findByUuidAndEnabledTrueAndStatusTrue(data.getTahunAkademikUuid());
             log.info("Tahun Akademik Present = {}", tahunAkademik.isPresent());
             if (tahunAkademik.isPresent()){
                 return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(data));
@@ -61,7 +64,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
     public GlobalResponse<MataPelajaran> getByUuid(String uuid) {
         log.info("Begin [{}]", "getByUuidMataPelajaran");
         log.info("Uuid = {}", uuid);
-        Optional<MataPelajaran> findById = repository.findByUuidAndEnabledTrue(uuid);
+        Optional<MataPelajaran> findById = tabMapper.selectByUuid(uuid);
         log.info("Mata Pelajaran Present = {}", findById.isPresent());
         if (findById.isPresent()) {
             log.info("Mata Pelajaran = {}", findById.get().toString());
@@ -75,7 +78,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "UpdateMataPelajaran");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<MataPelajaran> findById = repository.findByUuidAndEnabledTrue(uuid);
+            Optional<MataPelajaran> findById = tabMapper.selectByUuid(uuid);
             log.info("Mata Pelajaran Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Mata Pelajaran = {}", findById.get().toString());
@@ -100,7 +103,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "DeleteMataPelajaran");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<MataPelajaran> findById = repository.findByUuidAndEnabledTrue(uuid);
+            Optional<MataPelajaran> findById = tabMapper.selectByUuid(uuid);
             log.info("Mata Pelajaran Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Mata Pelajaran = {}", findById.get().toString());

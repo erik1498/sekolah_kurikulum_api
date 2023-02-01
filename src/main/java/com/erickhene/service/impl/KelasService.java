@@ -50,7 +50,7 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "CreateKelas");
         log.info("Kelas = {}", kelas);
         try {
-            Optional<TahunAkademik> tahunAkademik = tahunAkademikRepository.findByUuidAndEnabledTrue(kelas.getTahunAkademikUuid());
+            Optional<TahunAkademik> tahunAkademik = tahunAkademikRepository.findByUuidAndEnabledTrueAndStatusTrue(kelas.getTahunAkademikUuid());
             log.info("Tahun Akademik Present = {}", tahunAkademik.isPresent());
             if (tahunAkademik.isPresent()){
                 return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(kelas));
@@ -66,7 +66,7 @@ public class KelasService implements BaseService<Kelas> {
     public GlobalResponse<Kelas> getByUuid(String uuid) {
         log.info("Begin [{}]", "getByUuidKelas");
         log.info("Uuid = {}", uuid);
-        Optional<Kelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+        Optional<Kelas> findById = tabMapper.selectByUuid(uuid);
         log.info("Kelas Present = {}", findById.isPresent());
         if (findById.isPresent()) {
             log.info("Kelas = {}", findById.get().toString());
@@ -80,7 +80,7 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "UpdateKelas");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<Kelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+            Optional<Kelas> findById = tabMapper.selectByUuid(uuid);
             log.info("Kelas Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Kelas = {}", findById.get().toString());
@@ -104,7 +104,7 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "DeleteKelas");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<Kelas> findById = repository.findByUuidAndEnabledTrue(uuid);
+            Optional<Kelas> findById = tabMapper.selectByUuid(uuid);
             log.info("Kelas Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Kelas = {}", findById.get().toString());

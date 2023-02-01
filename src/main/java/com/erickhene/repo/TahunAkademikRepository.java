@@ -11,5 +11,7 @@ import java.util.Optional;
 public interface TahunAkademikRepository extends JpaRepository<TahunAkademik, String> {
     Optional<TahunAkademik> findByUuidAndEnabledTrue(String uuid);
 
+    Optional<TahunAkademik> findByUuidAndEnabledTrueAndStatusTrue(String uuid);
+
     List<TahunAkademik> findAllByEnabledTrue();
 }

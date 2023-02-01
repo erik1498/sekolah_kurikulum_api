@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.erickhene.dao.KelasTabMapper">
+<mapper namespace="com.erickhene.dao.MataPelajaranTabMapper">
 
     <resultMap id="BaseResultMap" type="com.erickhene.entity.Base">
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
@@ -8,28 +8,28 @@
         <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
     </resultMap>
 
-    <resultMap id="KelasResultMap" type="com.erickhene.entity.impl.Kelas" extends="BaseResultMap">
+    <resultMap id="MataPelajaranResultMap" type="com.erickhene.entity.impl.MataPelajaran" extends="BaseResultMap">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="k_name" jdbcType="VARCHAR" property="name" />
-        <result column="k_tingkatan_kelas_uuid" jdbcType="VARCHAR" property="tingkatanUuid" />
-        <result column="k_tahun_akademik_uuid" jdbcType="VARCHAR" property="tahunAkademikUuid" />
+        <result column="m_name" jdbcType="VARCHAR" property="name" />
+        <result column="m_kkm" jdbcType="VARCHAR" property="kkm" />
+        <result column="m_tahun_akademik_uuid" jdbcType="VARCHAR" property="tahunAkademikUuid" />
     </resultMap>
 
     <select
             id="selectAll"
-            resultMap="KelasResultMap"
+            resultMap="MataPelajaranResultMap"
     >
         SELECT
-            kt.*,
+            mt.*,
             tat.enabled AS tat_enabled,
             tat.ta_status AS tat_status
         FROM
-            kelas_tab kt,
+            mata_pelajaran_tab mt,
             tahun_akademik_tab tat
         WHERE
-            kt.enabled = 1
+            mt.enabled = 1
         AND
-            tat.uuid = kt.k_tahun_akademik_uuid
+            tat.uuid = mt.m_tahun_akademik_uuid
         AND
             tat.enabled = 1
         AND
@@ -38,22 +38,22 @@
 
     <select
             id="selectByUuid"
+            resultMap="MataPelajaranResultMap"
             parameterType="String"
-            resultMap="KelasResultMap"
     >
         SELECT
-            kt.*,
+            mt.*,
             tat.enabled AS tat_enabled,
             tat.ta_status AS tat_status
         FROM
-            kelas_tab kt,
+            mata_pelajaran_tab mt,
             tahun_akademik_tab tat
         WHERE
-            kt.enabled = 1
+            mt.enabled = 1
         AND
-            kt.uuid = '${value}'
+            mt.uuid = '${value}'
         AND
-            tat.uuid = kt.k_tahun_akademik_uuid
+            tat.uuid = mt.m_tahun_akademik_uuid
         AND
             tat.enabled = 1
         AND
