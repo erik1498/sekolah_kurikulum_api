@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.entity.impl.TahunAkademik;
+import com.erickhene.repo.TahunAkademikRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +22,12 @@ import com.erickhene.service.BaseService;
 public class MataPelajaranService implements BaseService<MataPelajaran> {
 
     private final MataPelajaranRepository repository;
+    private final TahunAkademikRepository tahunAkademikRepository;
 
     @Autowired
-    public MataPelajaranService(MataPelajaranRepository repository) {
+    public MataPelajaranService(MataPelajaranRepository repository, TahunAkademikRepository tahunAkademikRepository) {
         this.repository = repository;
+        this.tahunAkademikRepository = tahunAkademikRepository;
     }
 
     @Override
@@ -42,7 +46,12 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "createMataPelajaran");
         log.info("Mata Pelajaran = {}", data);
         try {
-            return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(data));
+            Optional<TahunAkademik> tahunAkademik = tahunAkademikRepository.findByUuidAndEnabledTrue(data.getTahunAkademikUuid());
+            log.info("Tahun Akademik Present = {}", tahunAkademik.isPresent());
+            if (tahunAkademik.isPresent()){
+                return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(data));
+            }
+            return new GlobalResponse<>("Tahun Akademik Doesn't Exist", HttpStatus.BAD_REQUEST.value());
         } catch (Exception e) {
             return new GlobalResponse<>(e.getCause().getCause().getMessage(), HttpStatus.BAD_REQUEST.value(), null);
         }
@@ -73,6 +82,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
                 MataPelajaran getByUuid = findById.get();
                 getByUuid.setName(data.getName());
                 getByUuid.setKkm(data.getKkm());
+                getByUuid.setTahunAkademikUuid(data.getTahunAkademikUuid());
                 getByUuid.setUpdatedDate(new Date());
                 repository.save(getByUuid);
                 log.info("Updated to = {}", getByUuid.toString());

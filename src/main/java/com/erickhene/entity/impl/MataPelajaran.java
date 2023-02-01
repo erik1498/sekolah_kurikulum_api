@@ -19,4 +19,7 @@ public class MataPelajaran extends Base {
 
     @Column(name = "m_kkm", nullable = false)
     private Integer kkm;
+
+    @Column(name = "m_tahun_akademik_uuid")
+    private String tahunAkademikUuid;
 }
