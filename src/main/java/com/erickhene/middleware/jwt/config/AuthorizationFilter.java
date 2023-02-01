@@ -1,9 +1,9 @@
-package com.erickhene.jwt.config;
+package com.erickhene.middleware.jwt.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.erickhene.jwt.dto.response.GlobalResponse;
-import com.erickhene.jwt.service.JwtUserDetailsService;
+import com.erickhene.middleware.jwt.dto.response.GlobalResponse;
+import com.erickhene.middleware.jwt.service.JwtUserDetailsService;
 import com.erickhene.util.ObjectMapperUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

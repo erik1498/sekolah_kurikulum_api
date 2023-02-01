@@ -1,4 +1,4 @@
-package com.erickhene.jwt.embeded;
+package com.erickhene.middleware.jwt.embeded;
 
 public enum Role {
     ROLE_USER,

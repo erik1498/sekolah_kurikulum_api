@@ -1,9 +1,8 @@
-package com.erickhene.jwt.config;
+package com.erickhene.middleware.jwt.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.erickhene.jwt.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.erickhene.middleware.jwt.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;

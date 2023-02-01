@@ -1,8 +1,8 @@
-package com.erickhene.jwt;
+package com.erickhene.middleware.jwt;
 
-import com.erickhene.jwt.embeded.Role;
-import com.erickhene.jwt.entity.User;
-import com.erickhene.jwt.service.UserService;
+import com.erickhene.middleware.jwt.embeded.Role;
+import com.erickhene.middleware.jwt.entity.User;
+import com.erickhene.middleware.jwt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

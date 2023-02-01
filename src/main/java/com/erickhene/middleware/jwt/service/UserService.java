@@ -1,7 +1,7 @@
-package com.erickhene.jwt.service;
+package com.erickhene.middleware.jwt.service;
 
-import com.erickhene.jwt.entity.User;
-import com.erickhene.jwt.repo.UserRepository;
+import com.erickhene.middleware.jwt.entity.User;
+import com.erickhene.middleware.jwt.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

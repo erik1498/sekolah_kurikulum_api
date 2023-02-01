@@ -1,4 +1,4 @@
-package com.erickhene.jwt.config;
+package com.erickhene.middleware.jwt.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

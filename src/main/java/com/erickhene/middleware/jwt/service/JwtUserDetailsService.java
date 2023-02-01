@@ -1,6 +1,6 @@
-package com.erickhene.jwt.service;
+package com.erickhene.middleware.jwt.service;
 
-import com.erickhene.jwt.entity.User;
+import com.erickhene.middleware.jwt.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

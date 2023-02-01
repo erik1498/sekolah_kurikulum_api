@@ -1,4 +1,4 @@
-package com.erickhene.jwt.dto.response;
+package com.erickhene.middleware.jwt.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,7 @@
-package com.erickhene.jwt.entity;
+package com.erickhene.middleware.jwt.entity;
 
-import com.erickhene.jwt.embeded.Role;
+import com.erickhene.middleware.jwt.embeded.Role;
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

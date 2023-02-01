@@ -1,6 +1,6 @@
-package com.erickhene.jwt.config;
+package com.erickhene.middleware.jwt.config;
 
-import com.erickhene.jwt.service.JwtUserDetailsService;
+import com.erickhene.middleware.jwt.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
-package com.erickhene.jwt.repo;
+package com.erickhene.middleware.jwt.repo;
 
-import com.erickhene.jwt.entity.User;
+import com.erickhene.middleware.jwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
