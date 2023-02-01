@@ -6,8 +6,10 @@
             id="setTahunAkademikStatus"
             parameterType="String"
     >
-        UPDATE tahun_akademik_tab SET ta_status = CASE
-        WHEN uuid = '${value}' THEN 1
+        UPDATE
+            tahun_akademik_tab SET ta_status = CASE
+        WHEN
+            uuid = '${value}' THEN 1
         ELSE 0
         END;
     </update>
