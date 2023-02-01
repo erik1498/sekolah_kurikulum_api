@@ -1,6 +1,7 @@
 package com.erickhene.service.impl;
 
 import com.erickhene.config.AppConstant;
+import com.erickhene.dao.TahunAkademikTabMapper;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
@@ -17,9 +18,11 @@ import java.util.Optional;
 @Slf4j
 public class TahunAkademikService implements BaseService<TahunAkademik> {
     private final TahunAkademikRepository repository;
+    private final TahunAkademikTabMapper tabMapper;
 
-    public TahunAkademikService(TahunAkademikRepository repository) {
+    public TahunAkademikService(TahunAkademikRepository repository, TahunAkademikTabMapper tabMapper) {
         this.repository = repository;
+        this.tabMapper = tabMapper;
     }
 
     @Override
@@ -102,5 +105,28 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
             log.error("Error [{}]", e.getMessage());
             return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
+    }
+
+    public GlobalResponse<Boolean> activeTahunAkademik(String uuid){
+        log.info("Begin [{}]", "activeTahunAkademik");
+        log.info("UUID = {}", uuid);
+        try{
+            Optional<TahunAkademik> enabledTrue = repository.findByUuidAndEnabledTrue(uuid);
+            log.info("Tahun Akademik Present = {}", enabledTrue.isPresent());
+            if (enabledTrue.isPresent()){
+                Boolean tahunAkademikStatus = tabMapper.setTahunAkademikStatus(uuid);
+                if (tahunAkademikStatus == Boolean.TRUE){
+                    log.info("Active Success");
+                    return new GlobalResponse<>("Success", HttpStatus.NO_CONTENT.value());
+                }
+                log.info("Active Failed");
+                return new GlobalResponse<>("Failed", HttpStatus.BAD_REQUEST.value());
+            }
+            return new GlobalResponse<>("Tahun Akademik Doesn't Exist", HttpStatus.BAD_REQUEST.value());
+        }catch (Exception e){
+            log.error("Error [{}]", e.getMessage());
+            return new GlobalResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+
     }
 }

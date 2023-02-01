@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.entity.impl.TahunAkademik;
+import com.erickhene.repo.TahunAkademikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,13 @@ public class KelasService implements BaseService<Kelas> {
 
     final KelasRepository repository;
     final KelasTabMapper tabMapper;
+    final TahunAkademikRepository tahunAkademikRepository;
 
     @Autowired
-    public KelasService(KelasRepository repository, KelasTabMapper tabMapper){
+    public KelasService(KelasRepository repository, KelasTabMapper tabMapper, TahunAkademikRepository tahunAkademikRepository){
         this.repository = repository;
         this.tabMapper = tabMapper;
+        this.tahunAkademikRepository = tahunAkademikRepository;
     }
 
     @Override
@@ -46,7 +50,12 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "CreateKelas");
         log.info("Kelas = {}", kelas);
         try {
-            return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(kelas));
+            Optional<TahunAkademik> tahunAkademik = tahunAkademikRepository.findByUuidAndEnabledTrue(kelas.getTahunAkademikUuid());
+            log.info("Tahun Akademik Present = {}", tahunAkademik.isPresent());
+            if (tahunAkademik.isPresent()){
+                return new GlobalResponse<>(null, HttpStatus.CREATED.value(), repository.save(kelas));
+            }
+            return new GlobalResponse<>("Tahun Akademik Doesn't Exist", HttpStatus.BAD_REQUEST.value());
         }catch(Exception e){
             log.error("Error [{}]", e.getCause().getCause().getLocalizedMessage());
             return new GlobalResponse<>(e.getCause().getCause().getLocalizedMessage(), HttpStatus.BAD_REQUEST.value());

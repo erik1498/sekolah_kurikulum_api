@@ -19,6 +19,20 @@
             id="selectAll"
             resultMap="KelasResultMap"
     >
-        SELECT * FROM kelas_tab WHERE enabled = 1
+        SELECT
+            kt.*,
+            tat.enabled AS tat_enabled,
+            tat.ta_status AS tat_status
+        FROM
+            kelas_tab kt,
+            tahun_akademik_tab tat
+        WHERE
+            kt.enabled = 1
+        AND
+            tat.uuid = kt.k_tahun_akademik_uuid
+        AND
+            tat.enabled = 1
+        AND
+            tat.ta_status = 1
     </select>
 </mapper>

@@ -51,6 +51,12 @@ public class TahunAkademikController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
+    @PutMapping("active/{uuid}")
+    public ResponseEntity<GlobalResponse<?>> activeStatus(@PathVariable("uuid") String uuid){
+        GlobalResponse<Boolean> response = tahunAkademikService.activeTahunAkademik(uuid);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
     @DeleteMapping("{uuid}")
     public ResponseEntity<GlobalResponse<Boolean>> delete(@PathVariable("uuid") String uuid){
         GlobalResponse<Boolean> response = tahunAkademikService.delete(uuid);
