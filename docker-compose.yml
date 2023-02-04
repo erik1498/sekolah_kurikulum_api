@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  sekolah-docker:
+    container_name: sekolah_docker_container
+    image: sekolah_app:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      - HOME=${HOME}
+    volumes:
+      - /home/erickhene/logs/docker/sekolah:/home/erickhene/logs/local/sekolah

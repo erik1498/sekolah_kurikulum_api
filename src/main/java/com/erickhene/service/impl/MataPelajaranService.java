@@ -1,10 +1,12 @@
 package com.erickhene.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 import com.erickhene.dao.MataPelajaranTabMapper;
+import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +36,9 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
     }
 
     @Override
-    public GlobalResponse<List<MataPelajaran>> getAll() {
+    public GlobalResponse<List<MataPelajaran>> getAll(DataTableReq dataTableReq) {
         log.info("Begin [{}]", "getAllMataPelajaran");
-        List<MataPelajaran> findAll = tabMapper.selectAll();
+        List<MataPelajaran> findAll = tabMapper.selectAll(DataTableReq.generateHashMap(dataTableReq));
         log.info("Mata Pelajaran Length = {}", findAll.size());
         if (!findAll.isEmpty()) {
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findAll);

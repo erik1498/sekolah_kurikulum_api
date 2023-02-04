@@ -3,6 +3,7 @@ package com.erickhene.service.impl;
 import com.erickhene.config.AppConstant;
 import com.erickhene.dao.TahunAkademikTabMapper;
 import com.erickhene.dto.GlobalResponse;
+import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
 import com.erickhene.service.BaseService;
@@ -26,9 +27,10 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
     }
 
     @Override
-    public GlobalResponse<List<TahunAkademik>> getAll() {
+    public GlobalResponse<List<TahunAkademik>> getAll(DataTableReq dataTableReq) {
         log.info("Begin [{}]", "getAllTahunAkademik");
-        List<TahunAkademik> findAll = repository.findAllByEnabledTrue();
+        dataTableReq = dataTableReq == null ? new DataTableReq() : dataTableReq;
+        List<TahunAkademik> findAll = repository.findAllByEnabledTrueAndNameContains(dataTableReq.getSearch(), DataTableReq.generatePageableData(dataTableReq)).getContent();
         log.info("Tahun Akademik Length = {}", findAll.size());
         if (findAll.isEmpty()){
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());

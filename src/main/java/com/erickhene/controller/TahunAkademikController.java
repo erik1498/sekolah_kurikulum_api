@@ -1,6 +1,7 @@
 package com.erickhene.controller;
 
 import com.erickhene.dto.GlobalResponse;
+import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.dto.request.TahunAkademikReq;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.service.impl.TahunAkademikService;
@@ -22,8 +23,8 @@ public class TahunAkademikController {
     }
 
     @GetMapping
-    public ResponseEntity<GlobalResponse<List<TahunAkademik>>> getAll(){
-        GlobalResponse<List<TahunAkademik>> response = tahunAkademikService.getAll();
+    public ResponseEntity<GlobalResponse<List<TahunAkademik>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
+        GlobalResponse<List<TahunAkademik>> response = tahunAkademikService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 

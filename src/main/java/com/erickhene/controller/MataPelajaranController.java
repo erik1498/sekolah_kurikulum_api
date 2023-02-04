@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.erickhene.dto.request.DataTableReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -26,8 +27,8 @@ public class MataPelajaranController {
     }
 
     @GetMapping
-    public ResponseEntity<GlobalResponse<List<MataPelajaran>>> getAll(){
-        GlobalResponse<List<MataPelajaran>> response = mataPelajaranService.getAll();
+    public ResponseEntity<GlobalResponse<List<MataPelajaran>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
+        GlobalResponse<List<MataPelajaran>> response = mataPelajaranService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 

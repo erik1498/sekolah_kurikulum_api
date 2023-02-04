@@ -1,9 +1,11 @@
 package com.erickhene.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,9 @@ public class KelasService implements BaseService<Kelas> {
     }
 
     @Override
-    public GlobalResponse<List<Kelas>> getAll() {
+    public GlobalResponse<List<Kelas>> getAll(DataTableReq dataTableReq) {
         log.info("Begin [{}]", "getAllKelas");
-        List<Kelas> findAll = this.tabMapper.selectAll();
+        List<Kelas> findAll = this.tabMapper.selectAll(DataTableReq.generateHashMap(dataTableReq));
         log.info("Kelas Length = {}", findAll.size());
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.dto.request.DataTableReq;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,10 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
     }
 
     @Override
-    public GlobalResponse<List<TingkatanKelas>> getAll() {
+    public GlobalResponse<List<TingkatanKelas>> getAll(DataTableReq dataTableReq) {
         log.info("Begin [{}]", "getAllTingkatanKelas");
-        List<TingkatanKelas> findAll = repository.findAllByEnabledTrue();
+        dataTableReq = dataTableReq == null ? new DataTableReq() : dataTableReq;
+        List<TingkatanKelas> findAll = repository.findAllByEnabledTrueAndNameContains(dataTableReq.getSearch(), DataTableReq.generatePageableData(dataTableReq)).getContent();
         log.info("Tingkatan Kelas Length = {}", findAll.size());
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());

@@ -1,6 +1,7 @@
 package com.erickhene.service;
 
 import com.erickhene.dto.GlobalResponse;
+import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.dto.request.KelasReq;
 import com.erickhene.entity.impl.Kelas;
 import com.erickhene.service.impl.KelasService;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -19,7 +21,8 @@ class KelasTest {
     @Test
     void getAllKelas(){
         log.info("getAllKelas");
-        GlobalResponse<List<Kelas>> response = kelasService.getAll();
+        DataTableReq dataTableReq = new DataTableReq();
+        GlobalResponse<List<Kelas>> response = kelasService.getAll(dataTableReq);
         log.info("Response = {}", response);
     }
 

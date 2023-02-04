@@ -18,22 +18,33 @@
     <select
             id="selectAll"
             resultMap="MataPelajaranResultMap"
+            parameterType="map"
     >
         SELECT
-            mt.*,
-            tat.enabled AS tat_enabled,
-            tat.ta_status AS tat_status
+            results.*
         FROM
-            mata_pelajaran_tab mt,
-            tahun_akademik_tab tat
+            (
+                SELECT
+                    m.*,
+                    tat.enabled AS tat_enabled,
+                    tat.ta_status AS tat_status
+                FROM
+                    mata_pelajaran_tab m,
+                    tahun_akademik_tab tat
+                WHERE
+                    m.enabled = 1
+                AND
+                    tat.uuid = m.m_tahun_akademik_uuid
+                AND
+                    tat.enabled = 1
+                AND
+                    tat.ta_status = 1
+            ) AS results
         WHERE
-            mt.enabled = 1
-        AND
-            tat.uuid = mt.m_tahun_akademik_uuid
-        AND
-            tat.enabled = 1
-        AND
-            tat.ta_status = 1
+            results.m_name
+            LIKE '%${search}%'
+        ORDER BY results.m_name ASC
+        LIMIT ${number}, ${size}
     </select>
 
     <select
