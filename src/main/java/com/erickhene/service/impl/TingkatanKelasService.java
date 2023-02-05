@@ -77,7 +77,7 @@ public class TingkatanKelasService implements BaseService<TingkatanKelas> {
                 getByUuid.setUpdatedDate(new Date());
                 repository.save(getByUuid);
                 log.info("Updated to = {}", getByUuid.toString());
-                return new GlobalResponse<>(null, HttpStatus.CREATED.value(), getByUuid);
+                return new GlobalResponse<>(null, HttpStatus.OK.value(), getByUuid);
             }
             return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         } catch (Exception e) {
