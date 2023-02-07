@@ -1,4 +1,4 @@
-package com.erickhene.dao;
+package com.erickhene.dao.mapper;
 
 import com.erickhene.entity.impl.MataPelajaran;
 import org.apache.ibatis.annotations.Mapper;

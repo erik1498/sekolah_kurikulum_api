@@ -1,7 +1,7 @@
 package com.erickhene.service.impl;
 
 import com.erickhene.config.AppConstant;
-import com.erickhene.dao.TahunAkademikTabMapper;
+import com.erickhene.dao.service.TahunAkademikDao;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.entity.impl.TahunAkademik;
@@ -19,11 +19,11 @@ import java.util.Optional;
 @Slf4j
 public class TahunAkademikService implements BaseService<TahunAkademik> {
     private final TahunAkademikRepository repository;
-    private final TahunAkademikTabMapper tabMapper;
+    private final TahunAkademikDao tahunAkademikDao;
 
-    public TahunAkademikService(TahunAkademikRepository repository, TahunAkademikTabMapper tabMapper) {
+    public TahunAkademikService(TahunAkademikRepository repository, TahunAkademikDao tahunAkademikDao) {
         this.repository = repository;
-        this.tabMapper = tabMapper;
+        this.tahunAkademikDao = tahunAkademikDao;
     }
 
     @Override
@@ -116,7 +116,7 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
             Optional<TahunAkademik> enabledTrue = repository.findByUuidAndEnabledTrue(uuid);
             log.info("Tahun Akademik Present = {}", enabledTrue.isPresent());
             if (enabledTrue.isPresent()){
-                Boolean tahunAkademikStatus = tabMapper.setTahunAkademikStatus(uuid);
+                Boolean tahunAkademikStatus = tahunAkademikDao.setTahunAkademikStatus(uuid);
                 if (tahunAkademikStatus == Boolean.TRUE){
                     log.info("Active Success");
                     return new GlobalResponse<>("Success", HttpStatus.NO_CONTENT.value());

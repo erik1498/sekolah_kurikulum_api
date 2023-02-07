@@ -1,11 +1,10 @@
 package com.erickhene.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import com.erickhene.dao.MataPelajaranTabMapper;
+import com.erickhene.dao.service.MataPelajaranDao;
 import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
@@ -25,20 +24,20 @@ import com.erickhene.service.BaseService;
 public class MataPelajaranService implements BaseService<MataPelajaran> {
 
     private final MataPelajaranRepository repository;
-    private final MataPelajaranTabMapper tabMapper;
+    private final MataPelajaranDao mataPelajaranDao;
     private final TahunAkademikRepository tahunAkademikRepository;
 
     @Autowired
-    public MataPelajaranService(MataPelajaranRepository repository, MataPelajaranTabMapper tabMapper, TahunAkademikRepository tahunAkademikRepository) {
+    public MataPelajaranService(MataPelajaranRepository repository, MataPelajaranDao mataPelajaranDao, TahunAkademikRepository tahunAkademikRepository) {
         this.repository = repository;
-        this.tabMapper = tabMapper;
+        this.mataPelajaranDao = mataPelajaranDao;
         this.tahunAkademikRepository = tahunAkademikRepository;
     }
 
     @Override
     public GlobalResponse<List<MataPelajaran>> getAll(DataTableReq dataTableReq) {
         log.info("Begin [{}]", "getAllMataPelajaran");
-        List<MataPelajaran> findAll = tabMapper.selectAll(DataTableReq.generateHashMap(dataTableReq));
+        List<MataPelajaran> findAll = mataPelajaranDao.selectAll(DataTableReq.generateHashMap(dataTableReq));
         log.info("Mata Pelajaran Length = {}", findAll.size());
         if (!findAll.isEmpty()) {
             return new GlobalResponse<>(null, HttpStatus.OK.value(), findAll);
@@ -66,7 +65,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
     public GlobalResponse<MataPelajaran> getByUuid(String uuid) {
         log.info("Begin [{}]", "getByUuidMataPelajaran");
         log.info("Uuid = {}", uuid);
-        Optional<MataPelajaran> findById = tabMapper.selectByUuid(uuid);
+        Optional<MataPelajaran> findById = mataPelajaranDao.selectByUuid(uuid);
         log.info("Mata Pelajaran Present = {}", findById.isPresent());
         if (findById.isPresent()) {
             log.info("Mata Pelajaran = {}", findById.get().toString());
@@ -80,7 +79,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "UpdateMataPelajaran");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<MataPelajaran> findById = tabMapper.selectByUuid(uuid);
+            Optional<MataPelajaran> findById = mataPelajaranDao.selectByUuid(uuid);
             log.info("Mata Pelajaran Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Mata Pelajaran = {}", findById.get().toString());
@@ -105,7 +104,7 @@ public class MataPelajaranService implements BaseService<MataPelajaran> {
         log.info("Begin [{}]", "DeleteMataPelajaran");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<MataPelajaran> findById = tabMapper.selectByUuid(uuid);
+            Optional<MataPelajaran> findById = mataPelajaranDao.selectByUuid(uuid);
             log.info("Mata Pelajaran Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Mata Pelajaran = {}", findById.get().toString());

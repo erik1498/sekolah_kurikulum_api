@@ -1,4 +1,4 @@
-package com.erickhene.dao;
+package com.erickhene.dao.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

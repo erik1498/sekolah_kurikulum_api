@@ -1,10 +1,10 @@
 package com.erickhene.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import com.erickhene.dao.service.KelasDao;
 import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.entity.impl.TahunAkademik;
 import com.erickhene.repo.TahunAkademikRepository;
@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.erickhene.config.AppConstant;
-import com.erickhene.dao.KelasTabMapper;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.entity.impl.Kelas;
 import com.erickhene.repo.KelasRepository;
@@ -25,21 +24,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KelasService implements BaseService<Kelas> {
 
-    final KelasRepository repository;
-    final KelasTabMapper tabMapper;
-    final TahunAkademikRepository tahunAkademikRepository;
+    private final KelasRepository repository;
+    private final KelasDao kelasDao;
+    private final TahunAkademikRepository tahunAkademikRepository;
 
     @Autowired
-    public KelasService(KelasRepository repository, KelasTabMapper tabMapper, TahunAkademikRepository tahunAkademikRepository){
+    public KelasService(KelasRepository repository, KelasDao kelasDao, TahunAkademikRepository tahunAkademikRepository){
         this.repository = repository;
-        this.tabMapper = tabMapper;
+        this.kelasDao = kelasDao;
         this.tahunAkademikRepository = tahunAkademikRepository;
     }
 
     @Override
     public GlobalResponse<List<Kelas>> getAll(DataTableReq dataTableReq) {
         log.info("Begin [{}]", "getAllKelas");
-        List<Kelas> findAll = this.tabMapper.selectAll(DataTableReq.generateHashMap(dataTableReq));
+        List<Kelas> findAll = kelasDao.selectAll(DataTableReq.generateHashMap(dataTableReq));
         log.info("Kelas Length = {}", findAll.size());
         if (findAll.isEmpty()) {
             return new GlobalResponse<>(AppConstant.DATA_IS_EMPTY, HttpStatus.NOT_FOUND.value());
@@ -68,7 +67,7 @@ public class KelasService implements BaseService<Kelas> {
     public GlobalResponse<Kelas> getByUuid(String uuid) {
         log.info("Begin [{}]", "getByUuidKelas");
         log.info("Uuid = {}", uuid);
-        Optional<Kelas> findById = tabMapper.selectByUuid(uuid);
+        Optional<Kelas> findById = kelasDao.selectByUuid(uuid);
         log.info("Kelas Present = {}", findById.isPresent());
         if (findById.isPresent()) {
             log.info("Kelas = {}", findById.get().toString());
@@ -82,7 +81,7 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "UpdateKelas");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<Kelas> findById = tabMapper.selectByUuid(uuid);
+            Optional<Kelas> findById = kelasDao.selectByUuid(uuid);
             log.info("Kelas Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Kelas = {}", findById.get().toString());
@@ -106,7 +105,7 @@ public class KelasService implements BaseService<Kelas> {
         log.info("Begin [{}]", "DeleteKelas");
         log.info("Uuid = {}", uuid);
         try{
-            Optional<Kelas> findById = tabMapper.selectByUuid(uuid);
+            Optional<Kelas> findById = kelasDao.selectByUuid(uuid);
             log.info("Kelas Present = {}", findById.isPresent());
             if (findById.isPresent()){
                 log.info("Kelas = {}", findById.get().toString());
