@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   sekolah-docker:
-    container_name: sekolah_docker_container
-    image: sekolah_app:1.0
+    container_name: sekolah_kurikulum_docker
+    image: sekolah_kurikulum_image:latest
     ports:
       - "8080:8080"
     environment:

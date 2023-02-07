@@ -105,7 +105,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>sekolah_kurikulum_docker</finalName>
+		<finalName>sekolah_kurikulum_image</finalName>
 	</build>
 
 </project>
