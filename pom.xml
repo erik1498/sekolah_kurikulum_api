@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.erickhene</groupId>
-	<artifactId>sekolah</artifactId>
+	<artifactId>sekolah.kurikulum</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sekolah</name>
-	<description>Sekolah Api Latihan</description>
+	<description>Aplikasi Sekolah - Bagian Kurikulum</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -105,7 +105,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>sekolah_docker</finalName>
+		<finalName>sekolah_kurikulum_docker</finalName>
 	</build>
 
 </project>
