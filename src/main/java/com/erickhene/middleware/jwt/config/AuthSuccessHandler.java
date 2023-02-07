@@ -3,6 +3,7 @@ package com.erickhene.middleware.jwt.config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.erickhene.middleware.jwt.service.UserService;
+import com.erickhene.util.IPAddressUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                         Instant.ofEpochMilli(ZonedDateTime.now(ZoneId.systemDefault()).toInstant().toEpochMilli() + expTime)
                 )
                 .sign(Algorithm.HMAC256(secret));
+        log.info("Generate Token From IP Address = {}", IPAddressUtil.getRequestIPAddress(request));
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Content-Type", "application/json");
         response.getWriter().write("{ \"token\" : \"" + token + "\" } ");
