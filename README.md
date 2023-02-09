@@ -1,2 +1,2 @@
 # sekolah
-Projek Latihan Untuk Api Sekolah Sederhana
+Projek Latihan Untuk Api Kurikulum Sekolah Sederhana
