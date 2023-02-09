@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erickhene.dao.mapper.KurikulumTabMapper">
+
+    <resultMap id="BaseResultMap" type="com.erickhene.entity.Base">
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+        <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+    </resultMap>
+
+    <resultMap id="KurikulumResultMap" type="com.erickhene.entity.impl.Kurikulum" extends="BaseResultMap">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="kk_name" jdbcType="VARCHAR" property="name" />
+        <result column="kk_tahun_akademik_uuid" jdbcType="VARCHAR" property="tahunAkademikUuid" />
+    </resultMap>
+
+    <select
+            id="selectAll"
+            resultMap="KurikulumResultMap"
+            parameterType="map"
+    >
+        SELECT results.* FROM (
+            SELECT
+                kkt.*,
+                tat.enabled AS tat_enabled,
+                tat.ta_status AS tat_status,
+                tat.ta_name AS tat_name
+            FROM
+                kurikulum_tab kkt,
+                tahun_akademik_tab tat
+            WHERE
+                kkt.enabled = 1
+            AND
+                tat.uuid = kkt.kk_tahun_akademik_uuid
+            AND
+                tat.enabled = 1
+            AND
+                tat.ta_status = 1
+        ) AS results
+        WHERE
+            results.kk_name
+        LIKE
+            '%${search}%'
+        ORDER BY
+            results.kk_name ASC
+        LIMIT
+            ${number}, ${size}
+    </select>
+
+    <select
+            id="selectByUuid"
+            parameterType="String"
+            resultMap="KurikulumResultMap"
+    >
+        SELECT
+            kkt.*,
+            tat.enabled AS tat_enabled,
+            tat.ta_status AS tat_status
+        FROM
+            kurikulum_tab kkt,
+            tahun_akademik_tab tat
+        WHERE
+            kkt.enabled = 1
+        AND
+            kkt.uuid = '${value}'
+        AND
+            tat.uuid = kkt.kk_tahun_akademik_uuid
+        AND
+            tat.enabled = 1
+        AND
+            tat.ta_status = 1
+    </select>
+</mapper>
