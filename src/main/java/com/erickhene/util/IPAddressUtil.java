@@ -1,35 +1,56 @@
 package com.erickhene.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
 
 @Slf4j
 public class IPAddressUtil {
-    private static final String[] IP_HEADERS = {
-            "X-Forwarded-For",
-            "Proxy-Client-IP",
-            "WL-Proxy-Client-IP",
-            "HTTP_X_FORWARDED_FOR",
-            "HTTP_X_FORWARDED",
-            "HTTP_X_CLUSTER_CLIENT_IP",
-            "HTTP_CLIENT_IP",
-            "HTTP_FORWARDED_FOR",
-            "HTTP_FORWARDED",
-            "HTTP_VIA",
-            "REMOTE_ADDR"
-    };
+    private IPAddressUtil(){}
+    private static final String localhostIPV4 = "127.0.0.1";
+    private static final String localhostIPV6 = "0:0:0:0:0:0:0:1";
 
-    public static String getRequestIPAddress(HttpServletRequest request) {
-        for (String header: IP_HEADERS){
-            String value = request.getHeader(header);
-            if (value == null || value.isEmpty()) {
-                continue;
+    public static String getClientIPAddressHttpServletRequest(HttpServletRequest request){
+        try{
+            String ipAddress = request.getRemoteHost();
+
+            if (localhostIPV4.equals(ipAddress) || localhostIPV6.equals(ipAddress)){
+                InetAddress inetAddress = InetAddress.getLocalHost();
+                ipAddress = inetAddress.getHostAddress();
             }
-            String[] parts = value.split("\\s*,\\s*");
-            return parts[0];
+
+            if (!ipAddress.isEmpty() && ipAddress.length()> 15 && (ipAddress.length() > 0 && ipAddress.indexOf(",") > 0)){
+                ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+            }
+            return ipAddress;
+        }catch (Exception e){
+            log.error("Error [{}]", e.getMessage());
+            return "Error get ip address";
         }
-        return request.getRemoteAddr();
+    }
+
+    public static String getClientIPAddressReactiveServerHttpRequest(ServerHttpRequest request){
+        try{
+            String ipAddress = request.getRemoteAddress().getAddress().getHostAddress();
+
+            if (localhostIPV4.equals(ipAddress) || localhostIPV6.equals(ipAddress)){
+                InetAddress inetAddress = InetAddress.getLocalHost();
+                ipAddress = inetAddress.getHostAddress();
+            }
+
+            if (!ipAddress.isEmpty() && ipAddress.length()> 15 && (ipAddress.length() > 0 && ipAddress.indexOf(",") > 0)){
+                ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+            }
+            return ipAddress;
+        }catch (NullPointerException e){
+            log.error("Error NullPointerException [{}]", e.getMessage());
+            return e.getMessage();
+        }
+        catch (Exception e){
+            log.error("Error Exception [{}]", e.getMessage());
+            return "Error get ip address";
+        }
     }
 }

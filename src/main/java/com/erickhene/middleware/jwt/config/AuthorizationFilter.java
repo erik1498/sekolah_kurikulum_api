@@ -35,6 +35,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         try {
+            log.info("Ip Address = {}", request.getRemoteAddr());
             UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
             if (authenticationToken == null){
                 filterChain.doFilter(request, response);

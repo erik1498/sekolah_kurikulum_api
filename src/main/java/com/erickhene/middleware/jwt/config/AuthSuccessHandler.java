@@ -43,7 +43,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                         Instant.ofEpochMilli(ZonedDateTime.now(ZoneId.systemDefault()).toInstant().toEpochMilli() + expTime)
                 )
                 .sign(Algorithm.HMAC256(secret));
-        log.info("Generate Token From IP Address = {}", IPAddressUtil.getRequestIPAddress(request));
+        log.info("Generate Token From IP Address = {}", IPAddressUtil.getClientIPAddressHttpServletRequest(request));
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Content-Type", "application/json");
         response.getWriter().write("{ \"token\" : \"" + token + "\" } ");
