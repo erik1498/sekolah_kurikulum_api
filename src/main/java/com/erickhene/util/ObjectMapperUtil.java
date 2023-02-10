@@ -1,8 +1,9 @@
 package com.erickhene.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Map;
 
 @Slf4j
 public class ObjectMapperUtil {
@@ -14,5 +15,9 @@ public class ObjectMapperUtil {
             objectMapper = new ObjectMapper();
         }
         return objectMapper;
+    }
+
+    public static Map<String, Object> generateHashMapFromObject(Object object){
+        return objectMapper.convertValue(object, Map.class);
     }
 }

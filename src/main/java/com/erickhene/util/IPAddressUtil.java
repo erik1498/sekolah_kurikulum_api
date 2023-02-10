@@ -9,14 +9,14 @@ import java.net.InetAddress;
 @Slf4j
 public class IPAddressUtil {
     private IPAddressUtil(){}
-    private static final String localhostIPV4 = "127.0.0.1";
-    private static final String localhostIPV6 = "0:0:0:0:0:0:0:1";
+    private static final String localhostIpVFour = "127.0.0.1";
+    private static final String localhostIPVSix = "0:0:0:0:0:0:0:1";
 
     public static String getClientIPAddressHttpServletRequest(HttpServletRequest request){
         try{
             String ipAddress = request.getRemoteHost();
 
-            if (localhostIPV4.equals(ipAddress) || localhostIPV6.equals(ipAddress)){
+            if (localhostIpVFour.equals(ipAddress) || localhostIPVSix.equals(ipAddress)){
                 InetAddress inetAddress = InetAddress.getLocalHost();
                 ipAddress = inetAddress.getHostAddress();
             }
@@ -35,7 +35,7 @@ public class IPAddressUtil {
         try{
             String ipAddress = request.getRemoteAddress().getAddress().getHostAddress();
 
-            if (localhostIPV4.equals(ipAddress) || localhostIPV6.equals(ipAddress)){
+            if (localhostIpVFour.equals(ipAddress) || localhostIPVSix.equals(ipAddress)){
                 InetAddress inetAddress = InetAddress.getLocalHost();
                 ipAddress = inetAddress.getHostAddress();
             }

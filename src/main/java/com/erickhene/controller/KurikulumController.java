@@ -3,7 +3,10 @@ package com.erickhene.controller;
 import com.erickhene.dto.GlobalResponse;
 import com.erickhene.dto.request.DataTableReq;
 import com.erickhene.dto.request.KurikulumReq;
+import com.erickhene.dto.request.KurikulumRulesReq;
 import com.erickhene.entity.impl.Kurikulum;
+import com.erickhene.entity.impl.KurikulumRules;
+import com.erickhene.service.impl.KurikulumRulesService;
 import com.erickhene.service.impl.KurikulumService;
 import com.erickhene.util.ValidationUtil;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,11 @@ import java.util.List;
 @RequestMapping("/api/kurikulum/")
 public class KurikulumController {
     private final KurikulumService kurikulumService;
+    private final KurikulumRulesService kurikulumRulesService;
 
-    public KurikulumController(KurikulumService kurikulumService) {
+    public KurikulumController(KurikulumService kurikulumService, KurikulumRulesService kurikulumRulesService) {
         this.kurikulumService = kurikulumService;
+        this.kurikulumRulesService = kurikulumRulesService;
     }
 
     @GetMapping
@@ -40,6 +45,15 @@ public class KurikulumController {
             return ValidationUtil.generateError(errors);
         }
         GlobalResponse<Kurikulum> response = kurikulumService.create(kurikulumReq.convertToEntity());
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PostMapping("/rules")
+    public ResponseEntity<GlobalResponse<?>> createRules(@Valid @RequestBody KurikulumRulesReq kurikulumRulesReq, Errors errors){
+        if (errors.hasErrors()){
+            return ValidationUtil.generateError(errors);
+        }
+        GlobalResponse<KurikulumRules> response = kurikulumRulesService.create(kurikulumRulesReq.convertToEntity());
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
