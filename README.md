@@ -1,2 +1,2 @@
-# sekolah
-Projek Latihan Untuk Api Sekolah Sederhana
+# sekolah_kurikulum_api
+Projek Latihan Untuk Api Kurikulum Sekolah Sederhana
