@@ -26,7 +26,7 @@ public class MataPelajaranController {
         this.mataPelajaranService = mataPelajaranService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<GlobalResponse<List<MataPelajaran>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
         GlobalResponse<List<MataPelajaran>> response = mataPelajaranService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
@@ -38,7 +38,7 @@ public class MataPelajaranController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody MataPelajaranReq req, Errors errors){
         if (errors.hasErrors()) {
             return ValidationUtil.generateError(errors);

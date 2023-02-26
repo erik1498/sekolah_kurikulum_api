@@ -22,7 +22,7 @@ public class TahunAkademikController {
         this.tahunAkademikService = tahunAkademikService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<GlobalResponse<List<TahunAkademik>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
         GlobalResponse<List<TahunAkademik>> response = tahunAkademikService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
@@ -35,7 +35,7 @@ public class TahunAkademikController {
     }
 
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody TahunAkademikReq tahunAkademikReq, Errors errors){
         if (errors.hasErrors())
             return ValidationUtil.generateError(errors);

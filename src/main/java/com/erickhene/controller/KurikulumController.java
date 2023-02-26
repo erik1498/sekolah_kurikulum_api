@@ -27,8 +27,8 @@ public class KurikulumController {
         this.kurikulumRulesService = kurikulumRulesService;
     }
 
-    @GetMapping
-    public ResponseEntity<GlobalResponse<List<Kurikulum>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
+    @PostMapping
+    public ResponseEntity<GlobalResponse<List<Kurikulum>>> getAll(@RequestBody DataTableReq dataTableReq){
         GlobalResponse<List<Kurikulum>> response = kurikulumService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
     }
@@ -39,7 +39,7 @@ public class KurikulumController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody KurikulumReq kurikulumReq, Errors errors){
         if (errors.hasErrors()){
             return ValidationUtil.generateError(errors);

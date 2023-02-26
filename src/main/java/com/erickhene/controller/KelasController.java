@@ -27,7 +27,7 @@ public class KelasController {
         this.kelasService = kelasService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<GlobalResponse<List<Kelas>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq) {
         GlobalResponse<List<Kelas>> response = kelasService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
@@ -39,7 +39,7 @@ public class KelasController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody KelasReq kelasReq, Errors errors){
         if (errors.hasErrors()) {
             return ValidationUtil.generateError(errors);

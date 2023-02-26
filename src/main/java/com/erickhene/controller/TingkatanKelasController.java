@@ -27,8 +27,8 @@ public class TingkatanKelasController {
         this.tingkatanKelasService = tingkatanKelasService;
     }
 
-    @GetMapping
-    public ResponseEntity<GlobalResponse<List<TingkatanKelas>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq) {
+    @PostMapping
+    public ResponseEntity<GlobalResponse<List<TingkatanKelas>>> getAll(@RequestBody DataTableReq dataTableReq) {
         GlobalResponse<List<TingkatanKelas>> response = tingkatanKelasService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
     }
@@ -39,7 +39,7 @@ public class TingkatanKelasController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody TingkatanKelasReq tingkatanKelasReq, Errors errors) {
         if (errors.hasErrors()) {
             return ValidationUtil.generateError(errors);
