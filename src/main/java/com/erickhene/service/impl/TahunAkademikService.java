@@ -78,7 +78,7 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
                 getByUuid.setUpdatedDate(new Date());
                 repository.save(getByUuid);
                 log.info("Updated to = {}", getByUuid.toString());
-                return new GlobalResponse<>(null, HttpStatus.OK.value(), getByUuid);
+                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), null);
             }
             return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         } catch (Exception e) {
@@ -119,7 +119,7 @@ public class TahunAkademikService implements BaseService<TahunAkademik> {
                 Boolean tahunAkademikStatus = tahunAkademikDao.setTahunAkademikStatus(uuid);
                 if (tahunAkademikStatus == Boolean.TRUE){
                     log.info("Active Success");
-                    return new GlobalResponse<>("Success", HttpStatus.NO_CONTENT.value());
+                    return new GlobalResponse<>("Success", HttpStatus.OK.value());
                 }
                 log.info("Active Failed");
                 return new GlobalResponse<>("Failed", HttpStatus.BAD_REQUEST.value());

@@ -91,7 +91,7 @@ public class KelasService implements BaseService<Kelas> {
                 getByUuid.setTingkatanUuid(data.getTingkatanUuid());
                 repository.save(getByUuid);
                 log.info("Updated to = {}", getByUuid.toString());
-                return new GlobalResponse<>(null, HttpStatus.OK.value(), getByUuid);
+                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), null);
             }
             return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class KelasService implements BaseService<Kelas> {
                 getByUuid.setEnabled(false);
                 repository.save(getByUuid);
                 log.info("Kelas Enabled = {}", getByUuid.toString());
-                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), true);
+                return new GlobalResponse<>(null, HttpStatus.OK.value(), true);
             }
             return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         }catch (Exception e){
